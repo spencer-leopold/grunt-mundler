@@ -16,13 +16,16 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('estrn_sass', 'Use estrn-sass with grunt.', function() {
     // Merge task-specific and/or target-specific options with these defaults.
+    var done = this.async();
     var options = this.options({
       imgPath: 'img',
       outputStyle: 'nested',
-      sourceMap: true
+      sourceMap: true,
+      watch: false
     });
 
-    estrnSass(options);
+    options._ = [options.src, options.dest];
+    estrnSass(options, done);
   });
 
 };
