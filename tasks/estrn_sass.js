@@ -1,4 +1,5 @@
-var estrnSass = require('estrn-sass');
+var path = require('path');
+var EstrnSass = require('../../estrn-sass');
 /*
  * grunt-estrn-sass
  * 
@@ -18,14 +19,26 @@ module.exports = function(grunt) {
     // Merge task-specific and/or target-specific options with these defaults.
     var done = this.async();
     var options = this.options({
-      imgPath: 'img',
       outputStyle: 'nested',
-      sourceMap: true,
+      sourceMap: false,
+      autoRun: false,
       watch: false
     });
 
-    options._ = [options.src, options.dest];
-    estrnSass(options, done);
+    this.files.forEach(function(files) {
+      options.cwd = files.orig.cwd;
+      options.src = files.orig.src;
+      options.dest = files.orig.dest;
+      var sass = new EstrnSass(options);
+
+      files.src.forEach(function(file) {
+        var filename = path.basename(file);
+        if (filename[0] !== '_') {
+          sass.compileSass(file);
+        }
+      }.bind(this));
+    }.bind(this));
+
   });
 
 };
