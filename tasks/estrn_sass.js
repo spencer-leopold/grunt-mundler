@@ -1,5 +1,5 @@
 var path = require('path');
-var EstrnSass = require('../../estrn-sass');
+var EstrnSass = require('estrn-sass');
 /*
  * grunt-estrn-sass
  * 
