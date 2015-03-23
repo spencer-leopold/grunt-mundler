@@ -38,7 +38,6 @@ module.exports = function(grunt) {
             sass.compileSass(file);
           }
         }.bind(this));
-        done();
       }
     }.bind(this));
 
