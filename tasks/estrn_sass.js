@@ -21,7 +21,6 @@ module.exports = function(grunt) {
     var options = this.options({
       outputStyle: 'nested',
       sourceMap: false,
-      autoRun: false,
       watch: false
     });
 
@@ -29,14 +28,18 @@ module.exports = function(grunt) {
       options.cwd = files.orig.cwd;
       options.src = files.orig.src;
       options.dest = files.orig.dest;
-      var sass = new EstrnSass(options);
 
-      files.src.forEach(function(file) {
-        var filename = path.basename(file);
-        if (filename[0] !== '_') {
-          sass.compileSass(file);
-        }
-      }.bind(this));
+      var sass = new EstrnSass(options, done);
+
+      if (!options.watch) {
+        files.src.forEach(function(file) {
+          var filename = path.basename(file);
+          if (filename[0] !== '_') {
+            sass.compileSass(file);
+          }
+        }.bind(this));
+        done();
+      }
     }.bind(this));
 
   });
