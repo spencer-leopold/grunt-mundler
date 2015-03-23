@@ -24,6 +24,7 @@ module.exports = function(grunt) {
       watch: false
     });
 
+    var i = 0;
     this.files.forEach(function(files) {
       options.cwd = files.orig.cwd;
       options.src = files.orig.src;
@@ -33,11 +34,18 @@ module.exports = function(grunt) {
 
       if (!options.watch) {
         files.src.forEach(function(file) {
+          i++;
           var filename = path.basename(file);
           if (filename[0] !== '_') {
             sass.compileSass(file);
           }
         }.bind(this));
+
+        if (i >= files.src.length) {
+          setTimeout(function() {
+            done();
+          }, 500)
+        }
       }
     }.bind(this));
 
