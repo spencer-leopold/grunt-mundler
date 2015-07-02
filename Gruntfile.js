@@ -1,5 +1,5 @@
 /*
- * grunt-estrn-sass
+ * grunt-mundler
  * 
  *
  * Copyright (c) 2015 Spencer Leopold <spencerl@easternstandard.com>
@@ -29,7 +29,7 @@ module.exports = function(grunt) {
     },
 
     // Configuration to be run (and then tested).
-    estrn_sass: {
+    mundler: {
       default_options: {
         options: {
         },
@@ -39,11 +39,8 @@ module.exports = function(grunt) {
       },
       custom_options: {
         options: {
-          src: 'src/scss',
-          dest: 'dist/css',
-          imgPath: 'img',
-          outputStyle: 'nested',
-          sourceMap: true
+          src: 'src/js/app',
+          dest: 'dist/js',
         },
       }
     },
@@ -65,7 +62,7 @@ module.exports = function(grunt) {
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'estrn_sass', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'mundler', 'nodeunit']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);
