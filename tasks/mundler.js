@@ -1,5 +1,3 @@
-var path = require('path');
-var Mundler = require('mundler');
 /*
  * grunt-mundler
  * 
@@ -10,18 +8,28 @@ var Mundler = require('mundler');
 
 'use strict';
 
+var Mundler = require('mundler');
+
 module.exports = function(grunt) {
-
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
-
   grunt.registerMultiTask('mundler', 'Use mundler with grunt.', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
     var done = this.async();
+    var options = this.data;
+    var watch;
 
-    var m = Mundler(this.data);
-    m.bundle().then(function() {
-      done();
+    for (var bundle in options) {
+      if (options.hasOwnProperty(bundle)) {
+        if (!!options[bundle].watch) {
+          watch = true;
+        }
+      }
+    }
+
+    var m = Mundler(options);
+
+    m.bundle().then(function(buf) {
+      if (!watch) {
+        done();
+      }
     });
   });
 
