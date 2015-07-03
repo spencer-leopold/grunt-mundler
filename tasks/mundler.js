@@ -18,8 +18,11 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('mundler', 'Use mundler with grunt.', function() {
     // Merge task-specific and/or target-specific options with these defaults.
     var done = this.async();
+
     var m = Mundler(this.data);
-    m.start();
+    m.bundle().then(function() {
+      done();
+    });
   });
 
 };
