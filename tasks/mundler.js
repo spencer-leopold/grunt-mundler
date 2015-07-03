@@ -11,8 +11,11 @@
 var Mundler = require('mundler');
 
 module.exports = function(grunt) {
+
   grunt.registerMultiTask('mundler', 'Use mundler with grunt.', function() {
-    var done = this.async();
+    var self = this;
+    var _ = grunt.util._;
+    var done = _.once(self.async());
     var options = this.data;
     var watch;
 
@@ -24,13 +27,17 @@ module.exports = function(grunt) {
       }
     }
 
-    var m = Mundler(options);
+    var m = Mundler(this.data);
 
     m.bundle().then(function(buf) {
       if (!watch) {
         done();
       }
     });
+
+    if (watch) {
+      grunt.log.write('Waiting forever...\n');
+    }
   });
 
 };
