@@ -34,10 +34,6 @@ module.exports = function(grunt) {
         done();
       }
     });
-
-    if (watch) {
-      grunt.log.write('Waiting forever...\n');
-    }
   });
 
 };
