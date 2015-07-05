@@ -28,7 +28,6 @@ module.exports = function(grunt) {
     }
 
     var m = Mundler(this.data);
-
     m.bundle().then(function(buf) {
       if (!watch) {
         done();
