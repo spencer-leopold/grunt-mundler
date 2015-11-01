@@ -16,23 +16,18 @@ module.exports = function(grunt) {
     var self = this;
     var _ = grunt.util._;
     var done = _.once(self.async());
-    var options = this.data;
-    var watch;
+    var options = this.options();
+    var bundles = this.data.bundles;
+    var logger = grunt.log;
+    logger.log = logger.writeln; // alias grunt's .write to .log
+    options.logger = logger;
 
-    for (var bundle in options) {
-      if (options.hasOwnProperty(bundle)) {
-        if (!!options[bundle].watch) {
-          watch = true;
-        }
-      }
-    }
-
-    var m = Mundler(this.data);
-    m.bundle().then(function(buf) {
-      if (!watch) {
-        done();
-      }
+    var m = Mundler({
+      options: options,
+      bundles: bundles
     });
+
+    m.bundle().then(done);
   });
 
 };
